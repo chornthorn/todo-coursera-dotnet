@@ -1,0 +1,80 @@
+### Todo API Test Requests
+
+@baseUrl = http://localhost:5230
+@basicAuth = YWRtaW46YWRtaW4xMjM=
+
+### Get all todos
+GET {{baseUrl}}/api/todo
+Authorization: Basic {{basicAuth}}
+
+### Get all todos with filtering
+GET {{baseUrl}}/api/todo?isCompleted=false&priority=3
+Authorization: Basic {{basicAuth}}
+
+### Get todo by ID
+GET {{baseUrl}}/api/todo/1
+Authorization: Basic {{basicAuth}}
+
+### Create new todo
+POST {{baseUrl}}/api/todo
+Authorization: Basic {{basicAuth}}
+Content-Type: application/json
+
+{
+  "title": "Test Todo from HTTP Client",
+  "description": "This todo was created using the HTTP client",
+  "priority": 4,
+  "category": "Testing",
+  "dueDate": "2026-12-31T23:59:59Z"
+}
+
+### Update todo
+PUT {{baseUrl}}/api/todo/1
+Authorization: Basic {{basicAuth}}
+Content-Type: application/json
+
+{
+  "title": "Updated Todo Title",
+  "description": "This todo has been updated",
+  "isCompleted": true,
+  "priority": 5,
+  "category": "Updated",
+  "dueDate": "2025-12-25T12:00:00Z"
+}
+
+### Partial update todo
+PATCH {{baseUrl}}/api/todo/2
+Authorization: Basic {{basicAuth}}
+Content-Type: application/json
+
+{
+  "isCompleted": true,
+  "priority": 5
+}
+
+### Mark todo as completed
+PATCH {{baseUrl}}/api/todo/3/complete
+Authorization: Basic {{basicAuth}}
+
+### Mark todo as incomplete
+PATCH {{baseUrl}}/api/todo/3/incomplete
+Authorization: Basic {{basicAuth}}
+
+### Get todo statistics
+GET {{baseUrl}}/api/todo/stats
+Authorization: Basic {{basicAuth}}
+
+### Delete completed todos
+DELETE {{baseUrl}}/api/todo/completed
+Authorization: Basic {{basicAuth}}
+
+### Delete specific todo
+DELETE {{baseUrl}}/api/todo/1
+Authorization: Basic {{basicAuth}}
+
+### Test authentication failure (no auth header)
+GET {{baseUrl}}/api/todo
+
+### Test invalid basic auth
+GET {{baseUrl}}/api/todo
+Authorization: Basic aW52YWxpZDppbnZhbGlk

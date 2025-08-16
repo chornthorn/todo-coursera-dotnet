@@ -1,0 +1,34 @@
+/* Enhance operation ID visibility */
+.opblock-summary-operation-id {
+    display: inline-block !important;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Make the search box more prominent */
+.swagger-ui .filter .search-input {
+    padding: 8px 12px;
+    font-size: 14px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 20px;
+    display: block;
+}
+
+/* Highlight matching text in search results */
+.swagger-ui .highlight-search {
+    background-color: yellow;
+    padding: 2px;
+}
+
+/* Make operation paths more visible */
+.swagger-ui .opblock .opblock-summary-path {
+    font-size: 16px;
+    font-weight: bold;
+    color: #3b4151;
+}
+
+/* Increase contrast for better readability */
+.swagger-ui .opblock-summary-description {
+    color: #3b4151;
+}
