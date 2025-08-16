@@ -1,0 +1,86 @@
+### User Management API Tests
+
+@baseUrl = http://localhost:5230
+@basicAuth = YWRtaW46YWRtaW4xMjM=
+
+### Get all users
+GET {{baseUrl}}/api/user
+Authorization: Basic {{basicAuth}}
+
+### Get all active users
+GET {{baseUrl}}/api/user?isActive=true
+Authorization: Basic {{basicAuth}}
+
+### Get users by role
+GET {{baseUrl}}/api/user?role=Admin
+Authorization: Basic {{basicAuth}}
+
+### Get user by ID
+GET {{baseUrl}}/api/user/1
+Authorization: Basic {{basicAuth}}
+
+### Get user by username
+GET {{baseUrl}}/api/user/username/admin
+Authorization: Basic {{basicAuth}}
+
+### Create a new user
+POST {{baseUrl}}/api/user
+Authorization: Basic {{basicAuth}}
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "firstName": "Test",
+  "lastName": "User",
+  "phoneNumber": "+1-555-0199",
+  "role": "User"
+}
+
+### Update user (PUT)
+PUT {{baseUrl}}/api/user/2
+Authorization: Basic {{basicAuth}}
+Content-Type: application/json
+
+{
+  "username": "johndoe_updated",
+  "email": "john.doe.updated@example.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "phoneNumber": "+1-555-0123",
+  "isActive": true,
+  "role": "User"
+}
+
+### Partial update user (PATCH)
+PATCH {{baseUrl}}/api/user/2
+Authorization: Basic {{basicAuth}}
+Content-Type: application/json
+
+{
+  "firstName": "Johnny",
+  "phoneNumber": "+1-555-9999"
+}
+
+### Activate user
+PATCH {{baseUrl}}/api/user/3/activate
+Authorization: Basic {{basicAuth}}
+
+### Deactivate user
+PATCH {{baseUrl}}/api/user/3/deactivate
+Authorization: Basic {{basicAuth}}
+
+### Get user statistics
+GET {{baseUrl}}/api/user/stats
+Authorization: Basic {{basicAuth}}
+
+### Delete user
+DELETE {{baseUrl}}/api/user/4
+Authorization: Basic {{basicAuth}}
+
+### Test authentication failure (no auth header)
+GET {{baseUrl}}/api/user
+
+### Test invalid basic auth
+GET {{baseUrl}}/api/user
+Authorization: Basic aW52YWxpZDppbnZhbGlk

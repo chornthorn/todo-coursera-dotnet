@@ -17,6 +17,11 @@ public class TodoDbContext : DbContext
     /// </summary>
     public DbSet<Todo> Todos { get; set; } = null!;
 
+    /// <summary>
+    /// Users table
+    /// </summary>
+    public DbSet<User> Users { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -55,6 +60,58 @@ public class TodoDbContext : DbContext
             entity.HasIndex(e => e.Category);
             entity.HasIndex(e => e.Priority);
             entity.HasIndex(e => e.DueDate);
+            entity.HasIndex(e => e.CreatedAt);
+        });
+
+        // Configure User entity
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Username)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            entity.Property(e => e.Email)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.FirstName)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            entity.Property(e => e.LastName)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            entity.Property(e => e.PhoneNumber)
+                .HasMaxLength(20);
+
+            entity.Property(e => e.Role)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasDefaultValue("User");
+
+            entity.Property(e => e.IsActive)
+                .IsRequired()
+                .HasDefaultValue(true);
+
+            entity.Property(e => e.CreatedAt)
+                .IsRequired();
+
+            entity.Property(e => e.UpdatedAt)
+                .IsRequired();
+
+            // Add unique constraints
+            entity.HasIndex(e => e.Username)
+                .IsUnique();
+
+            entity.HasIndex(e => e.Email)
+                .IsUnique();
+
+            // Add indexes for better query performance
+            entity.HasIndex(e => e.IsActive);
+            entity.HasIndex(e => e.Role);
             entity.HasIndex(e => e.CreatedAt);
         });
 
@@ -125,6 +182,48 @@ public class TodoDbContext : DbContext
                 CreatedAt = now,
                 UpdatedAt = now,
                 DueDate = now.AddDays(5)
+            }
+        );
+
+        // Seed Users
+        modelBuilder.Entity<User>().HasData(
+            new User
+            {
+                Id = 1,
+                Username = "admin",
+                Email = "admin@todoapp.com",
+                FirstName = "Admin",
+                LastName = "User",
+                Role = "Admin",
+                IsActive = true,
+                CreatedAt = now.AddDays(-10),
+                UpdatedAt = now.AddDays(-10)
+            },
+            new User
+            {
+                Id = 2,
+                Username = "johndoe",
+                Email = "john.doe@example.com",
+                FirstName = "John",
+                LastName = "Doe",
+                PhoneNumber = "+1-555-0123",
+                Role = "User",
+                IsActive = true,
+                CreatedAt = now.AddDays(-7),
+                UpdatedAt = now.AddDays(-7)
+            },
+            new User
+            {
+                Id = 3,
+                Username = "janedoe",
+                Email = "jane.doe@example.com",
+                FirstName = "Jane",
+                LastName = "Doe",
+                PhoneNumber = "+1-555-0124",
+                Role = "User",
+                IsActive = true,
+                CreatedAt = now.AddDays(-5),
+                UpdatedAt = now.AddDays(-5)
             }
         );
     }
